@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A cohort-derived reference tool for interpreting renal pelvic APD after paediatric pyeloplasty.">
+  <title>Post-pyeloplasty Ultrasound Follow-up Assessment</title>
+  <style>
+    :root {
+      --navy: #17365d;
+      --blue: #2f6f9f;
+      --pale: #eef4f8;
+      --green: #287a4a;
+      --amber: #a96800;
+      --red: #b03a2e;
+      --line: #ccd8e2;
+      --ink: #1f2933;
+      --muted: #536573;
+      --shadow: 0 5px 18px rgba(20, 45, 70, .06);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f4f6f8;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 24px auto 40px; }
+    .hero {
+      padding: 28px 30px;
+      margin-bottom: 20px;
+      border-radius: 18px;
+      background: linear-gradient(120deg, var(--navy), #315f85);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(23, 54, 93, .18);
+    }
+    .hero h1 { margin: 0 0 7px; font-size: clamp(26px, 4vw, 32px); line-height: 1.2; }
+    .hero p { max-width: 900px; margin: 5px 0; }
+    .layout { display: grid; grid-template-columns: 1fr 1.08fr; gap: 24px; align-items: start; }
+    .card {
+      padding: 22px;
+      border: 1px solid #e0e6eb;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .card-title { margin-bottom: 14px; color: var(--navy); font-size: 21px; font-weight: 750; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-weight: 650; }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid #b8c5cf;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+    input[type="number"]:focus {
+      border-color: var(--blue);
+      outline: 3px solid rgba(47, 111, 159, .16);
+    }
+    .help { display: block; margin-top: 4px; color: #6b7b87; font-size: 12px; }
+    .check { display: flex; gap: 9px; align-items: flex-start; margin: 11px 0; }
+    .check input { margin-top: 5px; }
+    .check label { margin: 0; font-weight: 600; }
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 11px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--blue);
+      color: #fff;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    button:hover { background: #275f89; }
+    .result {
+      padding: 17px;
+      margin-bottom: 14px;
+      border-left: 7px solid var(--blue);
+      border-radius: 10px;
+      background: #f8fbfd;
+    }
+    .result h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.3; }
+    .result p { margin: 0; }
+    .result-green { border-color: var(--green); }
+    .result-green h2 { color: var(--green); }
+    .result-amber { border-color: var(--amber); }
+    .result-amber h2 { color: var(--amber); }
+    .result-red { border-color: var(--red); }
+    .result-red h2 { color: var(--red); }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .metric {
+      min-height: 94px;
+      padding: 12px 8px;
+      border-radius: 10px;
+      background: var(--pale);
+      text-align: center;
+      font-size: 14px;
+    }
+    .metric b { display: block; margin-top: 4px; color: var(--navy); font-size: 20px; }
+    .action {
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid #f1cf8a;
+      border-radius: 10px;
+      background: #fff7e6;
+    }
+    .report {
+      padding: 12px;
+      margin-top: 14px;
+      border-radius: 10px;
+      background: #f2f5f7;
+      color: #445361;
+      font-size: 13px;
+    }
+    .download { background: #fff; color: var(--navy); border: 1px solid #aebdc8; }
+    .download:hover { background: #f2f5f7; }
+    .small-note {
+      margin-top: 16px;
+      padding-top: 13px;
+      border-top: 1px solid #dce4eb;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .privacy {
+      margin: 20px 2px 0;
+      color: #62727e;
+      font-size: 12px;
+      text-align: center;
+    }
+    .hidden { display: none; }
+    @media (max-width: 840px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .page { width: min(100% - 20px, 1120px); margin-top: 10px; }
+      .hero, .card { padding: 19px; border-radius: 13px; }
+      .field-grid, .metrics { grid-template-columns: 1fr; }
+      .metric { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>Post-pyeloplasty Ultrasound Follow-up Assessment</h1>
+      <p>Compare the current renal pelvic anteroposterior diameter (APD) with the cohort-derived postoperative range for the preoperative APD and time since pyeloplasty.</p>
+    </header>
+
+    <div class="layout">
+      <section class="card" aria-labelledby="input-title">
+        <div class="card-title" id="input-title">Ultrasound and clinical information</div>
+        <form id="assessment-form">
+          <div class="field-grid">
+            <div class="field">
+              <label for="baseline">Preoperative renal pelvic APD (mm)</label>
+              <input id="baseline" type="number" min="1" max="150" step="0.1" value="35.0" required>
+              <small class="help">Cohort-derived range: 15–70 mm.</small>
+            </div>
+            <div class="field">
+              <label for="months">Time since pyeloplasty (months)</label>
+              <input id="months" type="number" min="0.1" max="120" step="0.1" value="12.0" required>
+              <small class="help">Cohort-derived range: 3–24 months.</small>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="current">Current renal pelvic APD (mm)</label>
+              <input id="current" type="number" min="0" max="150" step="0.1" value="39.0" required>
+            </div>
+            <div class="field">
+              <label for="previous">Previous postoperative APD (mm, optional)</label>
+              <input id="previous" type="number" min="0" max="150" step="0.1" placeholder="Leave blank if unavailable">
+            </div>
+          </div>
+          <div class="field">
+            <label for="previous-months">Time of previous postoperative ultrasound (months, optional)</label>
+            <input id="previous-months" type="number" min="0.1" max="120" step="0.1" placeholder="Leave blank if unavailable">
+          </div>
+          <div class="check"><input id="symptoms" type="checkbox"><label for="symptoms">Symptoms suggestive of recurrent obstruction</label></div>
+          <div class="check"><input id="uti" type="checkbox"><label for="uti">Febrile urinary tract infection</label></div>
+          <div class="check"><input id="thinning" type="checkbox"><label for="thinning">Progressive renal parenchymal thinning</label></div>
+          <div class="check"><input id="functional" type="checkbox"><label for="functional">Deteriorating differential renal function or drainage concern</label></div>
+          <button type="submit">Assess follow-up ultrasound</button>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="result-title">
+        <div class="card-title" id="result-title">Follow-up assessment</div>
+        <div id="result" aria-live="polite"></div>
+        <p class="small-note">The cohort-derived range is intended to support interpretation of structural remodelling. Symptoms, urinary tract infection, renal parenchymal appearance, and renal functional assessment remain integral to follow-up. An APD above the range is not, by itself, a diagnosis of recurrent obstruction or an indication for reoperation.</p>
+      </section>
+    </div>
+    <p class="privacy">All calculations are performed locally in your browser. No entered clinical information is transmitted or stored.</p>
+  </main>
+
+  <script>
+    const BASE = [15.0, 25.0, 35.0, 50.0, 70.0];
+    const TIME = [3.0, 6.0, 12.0, 24.0];
+    const MED = [
+      [15.2, 12.3, 12.3, 11.6],
+      [18.5, 15.0, 15.0, 14.2],
+      [21.2, 17.2, 17.1, 16.3],
+      [24.3, 19.8, 19.7, 18.8],
+      [27.8, 22.6, 22.5, 21.4]
+    ];
+    const P90 = [
+      [28.7, 23.3, 23.3, 22.2],
+      [34.8, 28.3, 28.3, 26.9],
+      [39.6, 32.3, 32.2, 30.6],
+      [45.4, 37.0, 36.9, 35.2],
+      [51.7, 42.2, 42.1, 40.1]
+    ];
+
+    function interpolate1(x, xs, ys) {
+      if (x <= xs[0]) return ys[0];
+      if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
+      for (let i = 1; i < xs.length; i += 1) {
+        if (x <= xs[i]) {
+          const weight = (x - xs[i - 1]) / (xs[i] - xs[i - 1]);
+          return ys[i - 1] + weight * (ys[i] - ys[i - 1]);
+        }
+      }
+      return NaN;
+    }
+
+    function interpolate2(baseline, months, grid) {
+      const logBaseline = Math.log(baseline);
+      const logMonths = Math.log(months);
+      const xBaseline = BASE.map(Math.log);
+      const xTime = TIME.map(Math.log);
+      const values = TIME.map((_, column) =>
+        interpolate1(logBaseline, xBaseline, grid.map(row => row[column]))
+      );
+      return interpolate1(logMonths, xTime, values);
+    }
+
+    function value(id) {
+      const raw = document.getElementById(id).value.trim();
+      return raw === "" ? null : Number(raw);
+    }
+
+    function esc(text) {
+      return text.replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[character]);
+    }
+
+    function downloadReport(report) {
+      const blob = new Blob([report], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "post_pyeloplasty_ultrasound_assessment.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function assess(event) {
+      if (event) event.preventDefault();
+      const baseline = value("baseline");
+      const months = value("months");
+      const current = value("current");
+      const previous = value("previous");
+      const previousMonths = value("previous-months");
+      const output = document.getElementById("result");
+
+      if (baseline < 15 || baseline > 70 || months < 3 || months > 24) {
+        output.innerHTML = '<div class="result"><h2>Outside the cohort-derived range</h2><p>The input lies outside preoperative APD 15–70 mm or 3–24 months after pyeloplasty. Do not extrapolate the reference values.</p></div>';
+        return;
+      }
+
+      const median = interpolate2(baseline, months, MED);
+      const upper = interpolate2(baseline, months, P90);
+      const ratio = current / upper;
+      const pairedPrevious = previous !== null && previousMonths !== null;
+      const intervalIncrease = pairedPrevious &&
+        current - previous >= 5 &&
+        (current - previous) / Math.max(previous, 0.1) >= 0.20;
+      const previousUpper = pairedPrevious && previousMonths >= 3 && previousMonths <= 24
+        ? interpolate2(baseline, previousMonths, P90)
+        : null;
+      const persistent = previousUpper !== null && previous > previousUpper && current > upper;
+      const clinical = ["symptoms", "uti", "thinning", "functional"]
+        .some(id => document.getElementById(id).checked);
+
+      let title;
+      let className;
+      let description;
+      let action;
+      if (clinical || intervalIncrease || persistent) {
+        title = "Persistent or increasing hydronephrosis, or associated clinical concern";
+        className = "result-red";
+        description = "Serial ultrasound or clinical findings warrant assessment for recurrent obstruction. Ultrasound alone does not establish recurrent pelvi-ureteric junction obstruction.";
+        action = "Review examination quality and the clinical record; consider diuretic renography and paediatric urology review.";
+      } else if (current > upper) {
+        title = "Current APD is above the cohort-derived postoperative range";
+        className = "result-amber";
+        description = "A single measurement above the cohort-derived upper value may reflect biological or measurement variation.";
+        action = "Confirm bladder filling and measurement technique, and repeat a standardised ultrasound earlier. Escalate if the finding persists or clinical concerns emerge.";
+      } else {
+        title = "Current APD is within the cohort-derived postoperative range";
+        className = "result-green";
+        description = "The current APD is within the cohort-derived range for the preoperative APD and time after pyeloplasty, with no selected clinical concern.";
+        action = "Continue ultrasound follow-up according to the local postoperative protocol.";
+      }
+
+      let comparison = "";
+      let directionSentence = "";
+      if (previous !== null) {
+        const direction = current < previous ? "decreased" : (current > previous ? "increased" : "remained stable");
+        comparison = ` Compared with the previous postoperative ultrasound, APD ${direction}.`;
+        directionSentence = comparison;
+      }
+      const report = `Preoperative renal pelvic APD was ${baseline.toFixed(1)} mm. At ${months.toFixed(1)} months after pyeloplasty, renal pelvic APD was ${current.toFixed(1)} mm; the cohort-derived median was ${median.toFixed(1)} mm and the cohort-derived upper value was ${upper.toFixed(1)} mm.${directionSentence} Assessment: ${title}.`;
+
+      output.innerHTML = `
+        <div class="result ${className}">
+          <h2>${esc(title)}</h2>
+          <p>${esc(description)}</p>
+        </div>
+        <div class="metrics">
+          <div class="metric">Expected median APD<b>${median.toFixed(1)} mm</b></div>
+          <div class="metric">Expected upper value<b>${upper.toFixed(1)} mm</b></div>
+          <div class="metric">Current / upper value<b>${ratio.toFixed(2)}</b></div>
+        </div>
+        <div class="action"><strong>Suggested follow-up:</strong> ${esc(action)}</div>
+        <div class="report">${esc(report)}</div>
+        <button class="download" id="download-report" type="button">Download assessment as text</button>
+      `;
+      document.getElementById("download-report").addEventListener("click", () => downloadReport(report));
+    }
+
+    document.getElementById("assessment-form").addEventListener("submit", assess);
+    assess();
+  </script>
+</body>
+</html>
